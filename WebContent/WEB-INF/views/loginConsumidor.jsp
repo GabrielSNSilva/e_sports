@@ -46,12 +46,36 @@
   </nav>
   	
     <!-- Container Principal -->
-    <div id="main" class="container" style="margin-top: 182px; margin-bottom: 80px;">
-        <h3 class="page-header">Alguma coisa deu errado.</h3>
-        <div class="row" style="margin-top: 50px;">
-        	<a type="button" class="btn btn-primary" href="index"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Voltar </a>
-    	</div>
-    </div>
+    <div id="main" class="container" style="margin-top: 150px; margin-bottom: 50px;">
+       <h3 class="page-header">Faça seu login</h3>
+       <!-- Formulario de Login -->
+        <form action="login_consumidor" method="post">
+			<div class="row col-md-12">
+			<div class="form-group">
+				<div class="input-group col-md-4">
+				   <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div> 
+				   <input type="text" name="login" id="login" class="form-control" maxlength="60" placeholder="Login" size="100" required/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group col-md-4">
+				   <div class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></div> 
+				   <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha"  size="100" required/>
+				</div>
+			</div>
+			</div>
+			<div class="row col-md-12">
+				<button type="submit" class="btn btn-primary" name="command" value="${ consumidor.id }"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Entrar </button>
+			</div>
+		</form> 
+		
+		<div class="row" style="margin-top: 50px;">
+			<h3>Se ainda não possui uma conta, cadastra-se já!</h3>  
+			<div class="row col-md-12">
+				<a type="button" class="btn btn-info" href="cadastrar_consumidor"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Cadastre-se Aqui </a>
+			</div>
+		</div> 
+	</div>
 			
 	<!-- Footer -->
   <footer class="footer text-center">

@@ -45,9 +45,12 @@
           </li>
           <li class="nav-item mx-0 mx-lg-1">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#carrinho"><i class="fas fa-shopping-cart"></i></a>
-          </li>
+          </li>           
           <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="tela_login_consumidor"><i class="fas fa-user"></i></a>
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"><i class="fas fa-user"></i> Olá ${ consumidor.nome }</a>
+          </li>         
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="index">Sair</a>
           </li>
         </ul>
       </div>
@@ -320,14 +323,12 @@
 			                <p class="mb-5"><h4>R$ ${ produto.preco },00</h4></p>
 			                <input type="hidden" class="form-control" name="preco" id="preco" required maxlength="50" value="${ produto.preco }">
 		                </div>
-		                		          		
-		          		<div class="col-md-4" style="margin-top:50px; margin-bottom: 50px;">
+		                <div class="col-md-4" style="margin-top:50px; margin-bottom: 50px;">
 		          			<input type="number" class="form-control" name="quantidade" id="quantidade" maxlength="10" placeholder="Quantidade" size="10" required style="margin-left: 235px;">
 	          			</div>
-		          		
 		          		<div id="actions" class="row">
 			                <div class="col-md-12">
-			                	<input type="hidden" class="form-control" name="id_produto" id="id_produto" maxlength="50" value="${ produto.id }" required">
+			                	<input type="hidden" class="form-control" name="id_produto" id="id_produto" required maxlength="50" value="${ produto.id }">
 			                    <button type="submit" class="btn btn-primary" name="command" value="NovoProduto">Colocar no Carrinho</button>
 			                </div>
 			            </div>

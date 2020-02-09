@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -17,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.usjt.arqsw.entity.Carrinho;
+import br.usjt.arqsw.entity.Consumidor;
 import br.usjt.arqsw.entity.Produto;
 import br.usjt.arqsw.entity.Usuario;
+import br.usjt.arqsw.service.CarrinhoService;
+import br.usjt.arqsw.service.ConsumidorService;
 import br.usjt.arqsw.service.ProdutoService;
 import br.usjt.arqsw.service.UsuarioService;
 
@@ -27,67 +30,39 @@ import br.usjt.arqsw.service.UsuarioService;
 public class ManterController {
 	ProdutoService produtoService;
 	UsuarioService usuarioService;
+	CarrinhoService carrinhoService;
+	ConsumidorService consumidorService;
 	
 	@Autowired
 	private ServletContext servletContext;
 
 	@Autowired
-	public ManterController(ProdutoService ps, UsuarioService us) {
+	public ManterController(ProdutoService ps, UsuarioService us, CarrinhoService cs, ConsumidorService ls) {
 		produtoService = ps;
 		usuarioService = us;
+		carrinhoService = cs;
+		consumidorService = ls;
 	}
 
 	@RequestMapping("index")
-	public String inicio(@Valid Produto produto, BindingResult result, Model model) throws IOException {
-		List<Produto> produtos = produtoService.listarProdutos(produto);
-		List<Produto> produtosDecrescente = produtoService.listarProdutosDecrescente(produto);
+	public String inicio(Model model) throws IOException {
+		List<Produto> produtos = produtoService.listarProdutos();
+		List<Produto> produtosDecrescente = produtoService.listarProdutosDecrescente();
+		List<Carrinho> produtosCarrinho = carrinhoService.listarProdutoCarrinho();
 		model.addAttribute("produtos", produtos);
 		model.addAttribute("produtosDecrescente", produtosDecrescente);
+		model.addAttribute("produtosCarrinho", produtosCarrinho);
 		return "index";
 	}
 	
 	
 	
-	/* LOGIN */
-	@RequestMapping("/login")
-	public String login( ) {
-		return "login";
-	}
-	
-	@RequestMapping("/loginAdmin")
-	public String telaLoginAdmin(HttpSession session) {
-		Usuario usuario = (Usuario)session.getAttribute("adminLogado") ;
-		if (usuario != null) {
-			return "redirect:/admin_index";
-		}
+	/* ADMIN */
+	@RequestMapping("tela_login_admin")
+	public String telaLoginAdmin() {
 		return "loginAdmin";
 	}
 	
-	private Usuario carregarAdmin(String login, String senha) throws IOException{
-		return usuarioService.carregarAdmin(login, senha);
-	}
-	
-	@RequestMapping("/validar_login")
-	public String validarLoginAdmin(@RequestParam String login, @RequestParam String senha, Model model, HttpSession session) {
-		try {
-			System.out.println("User: " + login + " Senha: " + senha);
-			session.setAttribute("adminLogado", carregarAdmin(login, senha));
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "Erro";
-		}
-		return "redirect:/admin_index";
-	}
-	
-	@RequestMapping("/admin_logoff")
-	public String adminLogoffSession(HttpSession session) {
-		session.removeAttribute("adminLogado");
-		return "redirect:/index";
-	}
-	
-	
-	
-	/* ADMIN */
 	@RequestMapping("admin_index")
 	public String admin() {
 		return "admin/index";
@@ -114,10 +89,10 @@ public class ManterController {
 	}
 	
 	@RequestMapping("/listar_produtos")
-	public String listarProdutos(@Valid Produto produto, BindingResult result, Model model) {
+	public String listarProdutos(Model model) {
 		try {
 			// TODO Código para carregar os chamados
-			List<Produto> produtos = produtoService.listarProdutos(produto);
+			List<Produto> produtos = produtoService.listarProdutos();
 			model.addAttribute("produtos", produtos);
 			
 			return "admin/produto/ListarProdutos";
@@ -196,10 +171,10 @@ public class ManterController {
 	}
 	
 	@RequestMapping("/listar_usuarios")
-	public String listarUsuarios(@Valid Usuario usuario, BindingResult result, Model model) {
+	public String listarUsuarios(Model model) {
 		try {
 			// TODO Código para carregar os chamados
-			List<Usuario> usuarios = usuarioService.listarUsuarios(usuario);
+			List<Usuario> usuarios = usuarioService.listarUsuarios();
 			model.addAttribute("usuarios", usuarios);
 			
 			return "admin/usuario/ListarUsuarios";
@@ -256,5 +231,111 @@ public class ManterController {
 			return "Erro";
 		}
 	}
+	
+	@RequestMapping("/login_usuario")
+	public String envia(Usuario usuario) throws IOException {
+		Usuario resposta = usuarioService.loginUsuario(usuario);
+		if (resposta == null) {
+	    	return "Erro";
+	    } else {
+	    	return "redirect:/admin_index";
+	    }   
+	}
+	
+	
+	
+	/* CARRINHO */	
+	@RequestMapping("/inserir_produto_carrinho")
+	public String inserirProdutoCarrinho(@Valid Carrinho carrinho, BindingResult result, Model model) {
+		try {
+			carrinhoService.inserirProdutoCarrinho(carrinho);
+			return "redirect:/index";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
+	
+	@RequestMapping("/excluir_produto_carrinho")
+	public ModelAndView excluirProdutoCarrinho(@RequestParam int id) throws IOException {
+		carrinhoService.excluirProdutoCarrinho(id);
+		return new ModelAndView("redirect:/index");
+	}
+	
+	
+	
+	
+	/* CONSUMIDOR */ 
+	@RequestMapping("tela_login_consumidor")
+	public String telaLoginConsumidor() {
+		return "loginConsumidor";
+	}
+	
+	@RequestMapping("consumidor_index")
+	public String ConsumidorIndex(Model model) throws IOException {
+		List<Produto> produtos = produtoService.listarProdutos();
+		List<Produto> produtosDecrescente = produtoService.listarProdutosDecrescente();
+		List<Carrinho> produtosCarrinho = carrinhoService.listarProdutoCarrinho();
+		model.addAttribute("produtos", produtos);
+		model.addAttribute("produtosDecrescente", produtosDecrescente);
+		model.addAttribute("produtosCarrinho", produtosCarrinho);
+		return "consumidor/index";
+	}
+	
+	@RequestMapping("cadastrar_consumidor")
+	public String cadastrarConsumidor() {
+		return "consumidor/CadastrarConsumidor";
+	}
+	
+	@RequestMapping("/novo_consumidor")
+	public String novoConsumidor(@Valid Consumidor consumidor, Model model) {
+		try {
+			consumidorService.novoConsumidor(consumidor);
+			return "redirect:/index";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
+	
+	@RequestMapping("/listar_consumidores")
+	public String listarConsumidores(Model model) {
+		try {
+			// TODO Código para carregar os chamados
+			List<Consumidor> consumidores = consumidorService.listarConsumidores();
+			model.addAttribute("consumidores", consumidores);
+			
+			return "admin/consumidor/ListarConsumidores";
 
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
+
+	@RequestMapping("/visualizar_consumidor")
+	public String visualizarConsumidor(@RequestParam int id, @Valid Consumidor consumidor, BindingResult result, Model model) {
+		try {
+			// TODO Código para carregar os chamados
+			consumidor = consumidorService.carregarConsumidor(id);
+			model.addAttribute("consumidor", consumidor);
+			
+			return "admin/consumidor/VisualizarConsumidor";
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
+	
+	@RequestMapping("/login_consumidor")
+	public String logarConsumidor(Consumidor consumidor) throws IOException {
+		Consumidor resposta = consumidorService.loginConsumidor(consumidor);
+		if (resposta == null) {
+	    	return "Erro";
+	    } else {
+	    	return "redirect:/consumidor_index";
+	    }   
+	}
+	
 }

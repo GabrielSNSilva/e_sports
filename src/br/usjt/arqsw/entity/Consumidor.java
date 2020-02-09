@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Usuario {
+public class Consumidor {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -18,6 +18,18 @@ public class Usuario {
 	@NotNull
 	@Column(name="nome")
 	private String nome;
+	
+	@NotNull
+	@Column(name="sobrenome")
+	private String sobrenome;
+	
+	@NotNull
+	@Column(name="telefone")
+	private String telefone;
+	
+	@NotNull
+	@Column(name="endereco")
+	private String endereco;
 
 	@NotNull
 	@Column(name="login")
@@ -43,6 +55,30 @@ public class Usuario {
 		this.nome = nome;
 	}
 
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
 	public String getLogin() {
 		return login;
 	}
@@ -61,7 +97,8 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nome=" + nome + ", login=" + login + ", senha=" + senha + "]";
+		return "Consumidor [id=" + id + ", nome=" + nome + ", sobrenome=" + sobrenome + ", telefone=" + telefone
+				+ ", endereco=" + endereco + ", login=" + login + ", senha=" + senha + "]";
 	}
 
 }

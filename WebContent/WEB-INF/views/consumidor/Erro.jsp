@@ -49,7 +49,7 @@
     <div id="main" class="container" style="margin-top: 182px; margin-bottom: 80px;">
         <h3 class="page-header">Alguma coisa deu errado.</h3>
         <div class="row" style="margin-top: 50px;">
-        	<a type="button" class="btn btn-primary" href="index"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Voltar </a>
+        	<a type="button" class="btn btn-primary" href="consumidor_index"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Voltar </a>
     	</div>
     </div>
 			

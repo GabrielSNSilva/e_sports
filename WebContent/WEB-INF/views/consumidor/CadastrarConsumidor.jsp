@@ -46,11 +46,55 @@
   </nav>
   	
     <!-- Container Principal -->
-    <div id="main" class="container" style="margin-top: 182px; margin-bottom: 80px;">
-        <h3 class="page-header">Alguma coisa deu errado.</h3>
-        <div class="row" style="margin-top: 50px;">
-        	<a type="button" class="btn btn-primary" href="index"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Voltar </a>
-    	</div>
+    <div id="main" class="container" style="margin-top: 150px; margin-bottom: 50px;">
+        <h3 class="page-header">Cadastre-se</h3>
+        <!-- Formulario para inclusao de clientes -->
+        <form action="novo_consumidor" method="post">
+            <!-- area de campos do form -->
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="nome"><strong>Nome</strong></label>
+                    <input type="text" class="form-control" name="nome" id="nome" maxlength="100" placeholder="Nome" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="nome"><strong>Sobrenome</strong></label>
+                    <input type="text" class="form-control" name="sobrenome" id="sobrenome" maxlength="100" placeholder="Sobrenome" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="nome"><strong>Telefone</strong></label>
+                    <input type="text" class="form-control" name="telefone" id="telefone" maxlength="100" placeholder="+11 99999-9999" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="nome"><strong>Endereço</strong></label>
+                    <input type="text" class="form-control" name="endereco" id="endereco" maxlength="100" placeholder="Endereço" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="nome"><strong>Login</strong></label>
+                    <input type="text" class="form-control" name="login" id="login" maxlength="100" placeholder="Login" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="nome"><strong>Senha</strong></label>
+                    <input type="password" class="form-control" name="senha" id="senha" maxlength="10" placeholder="Senha" required>
+                </div>
+            </div>            
+            <hr />
+            <div id="actions" class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary" name="command" value="NovoConsumidor">Salvar</button>
+                    <a href="index" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>
+        </form>
     </div>
 			
 	<!-- Footer -->

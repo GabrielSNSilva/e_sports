@@ -21,7 +21,7 @@ public class ProdutoDAO {
 		return produto.getId();
 	}
 	
-	public List<Produto> listar(Produto produto) throws IOException{
+	public List<Produto> listar() throws IOException{
 		//conectei minha fila com a persistencia			
 		String jpql = "select p from Produto p";
 		
@@ -31,7 +31,7 @@ public class ProdutoDAO {
 		return result;
 	}
 	
-	public List<Produto> listarDescrescente(Produto produto) throws IOException{
+	public List<Produto> listarDescrescente() throws IOException{
 		//conectei minha fila com a persistencia			
 		String jpql = "select p from Produto p order by p desc";
 		

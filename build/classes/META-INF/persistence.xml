@@ -8,7 +8,9 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 		<provider>org.hibernate.ejb.HibernatePersistence</provider> 
 		<!-- entidade mapeada -->
 		<class>br.usjt.arqsw.entity.Produto</class>
+		<class>br.usjt.arqsw.entity.Consumidor</class>
 		<class>br.usjt.arqsw.entity.Usuario</class>
+		<class>br.usjt.arqsw.entity.Carrinho</class>
 		<properties>
 		<!-- dados da conexao foram migrados para o spring-context.xml -->
 			<!-- propriedades do hibernate -->

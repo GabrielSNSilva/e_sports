@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -21,7 +22,7 @@ public class UsuarioDAO {
 		return usuario.getId();
 	}
 	
-	public List<Usuario> listar(Usuario usuario) throws IOException{
+	public List<Usuario> listar() throws IOException{
 		//conectei minha fila com a persistencia			
 		String jpql = "select u from Usuario u";
 		
@@ -46,15 +47,16 @@ public class UsuarioDAO {
 		return usuario.getId();
 	}
 	
-	public Usuario validar(String login, String senha) throws IOException{
-		String jpql = "select u from Usuario u where u.login=:login and u.senha=:senha";
-		Query query = manager.createQuery(jpql);
-		query.setParameter("login", login);
-		query.setParameter("senha", senha);
-		
-		Usuario resultado = (Usuario)query.getSingleResult();
-		return resultado;
-		
-	}
+	public Usuario logar(String login, String senha) throws IOException {
+		try {
+			Usuario usuario = (Usuario) manager
+					.createQuery("select u from Usuario u where u.login = :login and u.senha = :senha")
+						.setParameter("login", login)
+						.setParameter("senha", senha).getSingleResult();
+			return usuario;
+		} catch (NoResultException e) {
+            return null;
+		}
+    }
 
 }

@@ -44,12 +44,12 @@ public class ProdutoService {
 		return dao.editar(produto);
 	}
 	
-	public List<Produto> listarProdutos(Produto produto) throws IOException{
-		return dao.listar(produto);
+	public List<Produto> listarProdutos() throws IOException{
+		return dao.listar();
 	}
 	
-	public List<Produto> listarProdutosDecrescente(Produto produto) throws IOException{
-		return dao.listarDescrescente(produto);
+	public List<Produto> listarProdutosDecrescente() throws IOException{
+		return dao.listarDescrescente();
 	}
 	
 	public void gravarImagem(ServletContext servletContext, Produto produto, MultipartFile file)

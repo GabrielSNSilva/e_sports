@@ -38,23 +38,12 @@ public class UsuarioService {
 		return dao.editar(usuario);
 	}
 	
-	public List<Usuario> listarUsuarios(Usuario usuario) throws IOException{
-		return dao.listar(usuario);
+	public List<Usuario> listarUsuarios() throws IOException {
+		return dao.listar();
 	}
 	
-	public Usuario carregarAdmin(String login, String senha) throws IOException {
-		Usuario usuario = dao.validar(login, senha);
-		
-		if(login.equals(usuario.getLogin()) && senha.equals(usuario.getSenha())) {
-			System.out.println("Admin logado com sucesso, ID do admin: " + usuario.getId());
-			return usuario;
-		}
-		else {
-			System.out.println("Banco de dados: " + usuario.getLogin() + " / " + usuario.getSenha());
-			System.out.println("Interface: " + usuario + " / " + senha);
-			System.out.println("As senhas são diferentes");
-			return null;
-		}
+	public Usuario loginUsuario(Usuario usuario) throws IOException {
+		return dao.logar(usuario.getLogin(), usuario.getSenha());     
 	}
 
 }
